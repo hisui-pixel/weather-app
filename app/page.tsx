@@ -83,7 +83,7 @@ export default function Home() {
     
 
       <div className="main_weather flex flex-col items-center text-  center
-    bg-gray-300/50 w-11/12 sm:w-3/4 md:w-1/2 p-4 sm:p-8 rounded-2xl">
+    bg-gray-300/50 w-10/12 sm:w-3/4 md:w-1/2 p-4 sm:p-8 rounded-2xl">
         <div className="flex-1">
           <FavoriteButton
           onAdd={()=>addFavoriteCity(weather.name)}
