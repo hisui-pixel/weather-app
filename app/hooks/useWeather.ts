@@ -19,6 +19,7 @@ export function useWeather(){
 
         try{
             const geoResults=await fetchGeocoding(city);
+            console.log("Geocoding結果",geoResults);
             if(geoResults.length===0){
                 throw new Error("都市が見つかりませんでした");
             }
