@@ -23,15 +23,15 @@ export default function Home() {
     searchByLocation();
   },[]);
 
-  if(error){
-    return <p style={{color:"red"}}>{error}</p>
-  }
+  // if(error){
+  //   return <p style={{color:"red"}}>{error}</p>
+  // }
 
-  if(!weather||isLoading){//空配列であるときそれを渡さないようにする
-    return(
-      <p>読み込み中...</p>
-    );
-  }
+  // if(!weather||isLoading){//空配列であるときそれを渡さないようにする
+  //   return(
+  //     <p>読み込み中...</p>
+  //   );
+  // }
 
   const handleSearchCity=(e:React.FormEvent)=>{
     e.preventDefault();
@@ -55,7 +55,10 @@ export default function Home() {
 
 
   return(
+    
     <>
+    {weather && ! isLoading && (//weatehr|nullを回避
+
     <div className={`min-h-screen ${getBackgroundClass(weather.weather[0].main)}`}>
 
     <div className="flex flex-col items-center text-center w-full mt-16">
@@ -76,6 +79,9 @@ export default function Home() {
           type="submit"
           >検索</button>
       </form>
+      {error &&(
+        <p className="text-red-5oo mt-2">{error}</p>
+      )}
 
     <ul className="flex flex-col w-8/10 m-8 gap-4">
       {UserFavoriteCity}
@@ -168,6 +174,7 @@ export default function Home() {
     </div>
 
     </div>
+    )}
   
     </>
   );
