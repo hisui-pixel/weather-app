@@ -17,7 +17,7 @@ export function useWeather(){
         setWeather(null);
         setFocast(null);
 
-        try{ try {
+        try{
             const [weatherData, forecastData] = await Promise.all([
             fetchWeather(city),
             fetchForecast(city),
