@@ -1,4 +1,4 @@
-import { ForecastData, WeatherData } from "../types/weather";
+import { ForecastData, GeocodingResults, WeatherData } from "../types/weather";
 
 const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
 const BASE_URL="https://api.openweathermap.org/data/2.5/weather";
@@ -50,4 +50,18 @@ export async function fetchForecastLocatiuonData(lat:number,lon:number):Promise<
     }
     const data:ForecastData=await res.json();
     return data;
+}
+
+// lib/api_weather.ts に追加
+export async function fetchGeocoding(cityName: string): Promise<GeocodingResults[]> {
+  const res = await fetch(
+    `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(cityName)}&limit=1&appid=${API_KEY}`
+  );
+
+  if (!res.ok) {
+    throw new Error(`都市の検索に失敗しました(status:${res.status})`);
+  }
+
+  const data: GeocodingResults[] = await res.json();
+  return data;
 }

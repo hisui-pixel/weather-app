@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ForecastData, WeatherData } from "../types/weather";
-import { fetchForecast, fetchForecastLocatiuonData, fetchNowLocationData, fetchWeather } from "../lib/api_weather";
+import { fetchForecast, fetchForecastLocatiuonData, fetchGeocoding, fetchNowLocationData, fetchWeather } from "../lib/api_weather";
 
 export function useWeather(){
     const [weather,setWeather]=useState<WeatherData|null>(null);
@@ -18,9 +18,15 @@ export function useWeather(){
         setFocast(null);
 
         try{
+            const geoResults=await fetchGeocoding(city);
+            if(geoResults.length===0){
+                throw new Error("都市が見つかりませんでした");
+            }
+            const {lat,lon}=geoResults[0];
+
             const [weatherData,ForecastData]=await Promise.all([
-                fetchWeather(city),
-                fetchForecast(city),
+                fetchNowLocationData(lat,lon),
+                fetchForecastLocatiuonData(lat,lon),
             ]);
             setWeather(weatherData);
             setFocast(ForecastData);

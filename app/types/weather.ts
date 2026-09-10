@@ -70,3 +70,11 @@ export interface ForecastData{
         county:string;
     };
 }
+
+export interface GeocodingResults{
+    name:string;
+    lat:number;
+    lon:number;
+    country:string:
+    local_names?:{[lang:string]:string};
+}
