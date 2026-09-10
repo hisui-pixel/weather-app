@@ -17,20 +17,13 @@ export function useWeather(){
         setWeather(null);
         setFocast(null);
 
-        try{
-            const geoResults=await fetchGeocoding(city);
-            console.log("Geocoding結果",geoResults);
-            if(geoResults.length===0){
-                throw new Error("都市が見つかりませんでした");
-            }
-            const {lat,lon}=geoResults[0];
-
-            const [weatherData,ForecastData]=await Promise.all([
-                fetchNowLocationData(lat,lon),
-                fetchForecastLocatiuonData(lat,lon),
+        try{ try {
+            const [weatherData, forecastData] = await Promise.all([
+            fetchWeather(city),
+            fetchForecast(city),
             ]);
             setWeather(weatherData);
-            setFocast(ForecastData);
+            setFocast(forecastData);
         }catch(err){
             setError(
                 err instanceof Error ? err.message:"不明なエラーが発生しました"
